@@ -1,7 +1,8 @@
+import { db } from "@/prisma/db";
 import Link from "next/link";
-import { posts } from "./data";
 
-export default function Home() {
+export default async function Home() {
+  const posts = await db.post.findMany();
   return (
     <main className="p4">
       {posts.map((post) => (
