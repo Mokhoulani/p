@@ -1,11 +1,4 @@
 import { Prisma } from "@prisma/client";
-interface Post {
-  id: string;
-  title: string;
-  body: string;
-  author: string;
-  createdAt: string;
-}
 
 export const posts: Prisma.PostCreateInput[] = [
   {
