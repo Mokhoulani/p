@@ -1,7 +1,19 @@
 import { posts } from "@/app/data";
+import { Metadata } from "next";
 
 interface Props {
   params: { id: string };
+}
+
+export const metadata: Metadata = {
+  title: "Post Heaven | Post Page",
+  description: "Read about an intersting post!",
+};
+
+export function generateStaticParams() {
+  return posts.map((post) => ({
+    id: post.id,
+  }));
 }
 
 export default function PostPage(props: Props) {
