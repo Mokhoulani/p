@@ -1,4 +1,4 @@
-import { posts } from "@/app/data";
+import { db } from "@/prisma/db";
 import { Metadata } from "next";
 
 interface Props {
@@ -7,17 +7,16 @@ interface Props {
 
 export const metadata: Metadata = {
   title: "Post Heaven | Post Page",
-  description: "Read about an intersting post!",
+  description: "Read about an intersting post! ",
 };
 
-export function generateStaticParams() {
-  return posts.map((post) => ({
-    id: post.id,
-  }));
+export async function generateStaticParams() {
+  const posts = await db.post.findMany();
+  return posts.map((post) => ({ params: { id: post.id } }));
 }
 
-export default function PostPage(props: Props) {
-  const post = posts.find((post) => post.id === props.params.id);
+export default async function PostPage(props: Props) {
+  const post = await db.post.findUnique({ where: { id: props.params.id } });
   if (!post) return null;
   return (
     <main className="p-4">
